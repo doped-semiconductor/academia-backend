@@ -1,7 +1,5 @@
 package esd.academia.model;
 
-import esd.academia.model.Course;
-
 import java.util.Set;
 
 import jakarta.persistence.Column;
