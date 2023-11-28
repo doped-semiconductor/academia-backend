@@ -1,5 +1,8 @@
 package esd.academia.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import esd.academia.model.Faculty;
@@ -19,6 +22,16 @@ public class FacultyServiceImpl implements FacultyService {
 	@Override
 	public Faculty saveFaculty(Faculty faculty) {
 		return facultyRepo.save(faculty);
+	}
+
+	@Override
+	public List<Faculty> getFaculties() {
+		return facultyRepo.findAll();
+	}
+
+	@Override
+	public Optional<Faculty> getFacultyById(long id) {
+		return facultyRepo.findById(id);
 	}
 
 }

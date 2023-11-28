@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="students")
+@Table(name="student")
 public class Student {
 	
 	@Id
@@ -24,25 +24,25 @@ public class Student {
 	private long student_id;
 	
 	@Column(name="roll", unique = true, nullable=false)
-	private String rollNumber;
+	private String rollnumber;
 	
 	@Column(name="fname", nullable=false)
-	private String firstName;
+	private String firstname;
 	
 	@Column(name="lname")
-	private String lastName;
+	private String lastname;
 	
 	@Column(name="email",unique = true, nullable=false)
 	private String email;
 	
 	@Column(name="photo")
-	private String photoUrl;
+	private String photourl;
 	
 	@Column(name="cgpa", nullable=false)
 	private double cgpa = 0.0;
 	
 	@Column(name="credits", nullable=false)
-	private int totalCredits;
+	private int totalcredits;
 	
 	@Column(name="gradyear")
 	private int graduationYear;	
