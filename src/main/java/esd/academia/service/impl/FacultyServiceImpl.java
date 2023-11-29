@@ -34,4 +34,14 @@ public class FacultyServiceImpl implements FacultyService {
 		return facultyRepo.findById(id);
 	}
 
+	@Override
+	public Faculty updateFacultyById(long id, Faculty faculty) {
+		Faculty retrievedFac = null;
+		Optional<Faculty> fac = facultyRepo.findById(id);
+		if(fac.isPresent()) {
+			retrievedFac = facultyRepo.save(faculty);
+		}
+		return retrievedFac;
+	}
+
 }

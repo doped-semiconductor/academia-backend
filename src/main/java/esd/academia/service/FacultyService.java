@@ -12,5 +12,7 @@ public interface FacultyService {
 	List<Faculty> getFaculties();
 	
 	Optional<Faculty> getFacultyById(long id);
+	
+	Faculty updateFacultyById(long id, Faculty faculty);
 
 }

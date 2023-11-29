@@ -11,9 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name="student")
 public class Student {
@@ -50,5 +48,99 @@ public class Student {
 	@ManyToMany
 	@JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private Set<Course> enrolledCourses;
+
+	public long getStudent_id() {
+		return student_id;
+	}
+
+	public void setStudent_id(long student_id) {
+		this.student_id = student_id;
+	}
+
+	public String getRollnumber() {
+		return rollnumber;
+	}
+
+	public void setRollnumber(String rollnumber) {
+		this.rollnumber = rollnumber;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhotourl() {
+		return photourl;
+	}
+
+	public void setPhotourl(String photourl) {
+		this.photourl = photourl;
+	}
+
+	public double getCgpa() {
+		return cgpa;
+	}
+
+	public void setCgpa(double cgpa) {
+		this.cgpa = cgpa;
+	}
+
+	public int getTotalcredits() {
+		return totalcredits;
+	}
+
+	public void setTotalcredits(int totalcredits) {
+		this.totalcredits = totalcredits;
+	}
+
+	public int getGraduationYear() {
+		return graduationYear;
+	}
+
+	public void setGraduationYear(int graduationYear) {
+		this.graduationYear = graduationYear;
+	}
+
+	public Set<Course> getEnrolledCourses() {
+		return enrolledCourses;
+	}
+
+	public void setEnrolledCourses(Set<Course> enrolledCourses) {
+		this.enrolledCourses = enrolledCourses;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [student_id=" + student_id + ", rollnumber=" + rollnumber + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", email=" + email + ", photourl=" + photourl + ", cgpa=" + cgpa
+				+ ", totalcredits=" + totalcredits + ", graduationYear=" + graduationYear + ", enrolledCourses="
+				+ enrolledCourses + "]";
+	}
+
+	public Student() {
+		super();
+	}
+	
+	
 
 }

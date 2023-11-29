@@ -3,6 +3,7 @@ package esd.academia.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import esd.academia.model.Faculty;
 import esd.academia.service.FacultyService;
-import esd.academiaa.dto.FacultyDTO;
 
 @RestController
 @RequestMapping("/faculty")
@@ -47,34 +47,32 @@ public class FacultyController {
 			System.out.println("Error: "+e.getMessage());
 			System.out.println("Error: "+e.getStackTrace());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-		
-		return new ResponseEntity<List<Faculty>>(res, status);
-		
+		}		
+		return new ResponseEntity<List<Faculty>>(res, status);		
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Faculty> getFacultyById(@PathVariable long id){
 		Faculty res = null;
-		HttpStatus status = HttpStatus.ACCEPTED;
-		
+		HttpStatus status = HttpStatus.ACCEPTED;		
 		try {
 			Optional<Faculty> fac = facultyService.getFacultyById(id);
 			if(fac.isPresent()) {
 				res = fac.get();
+			}
+			else {
+				status = HttpStatus.NOT_FOUND;
 			}
 		}
 		catch (Exception e) {
 			System.out.println("Error: "+e.getClass());
 			System.out.println("Error: "+e.getMessage());
 			status = HttpStatus.NOT_FOUND;
-		}
-		
-		return new ResponseEntity<Faculty>(res, status);
-		
+		}		
+		return new ResponseEntity<Faculty>(res, status);	
 	}
 	
-	@PostMapping(path = "/add", consumes = {MediaType.APPLICATION_JSON_VALUE})
+	@PostMapping(path = "/add")
 	public ResponseEntity<String> addFaculty(@RequestBody Faculty faculty){
 		System.out.println("Adding: "+faculty);
 		String msg = "Successfully Added!";
@@ -86,12 +84,83 @@ public class FacultyController {
 		catch (Exception e) {
 			System.out.println("Error: "+e.getClass());
 			System.out.println("Error: "+e.getMessage());
-			System.out.println("Error: "+e.getStackTrace());
-			System.out.println("Error: "+e.getCause());
 			msg = "Something went wrong - "+e.getMessage();
 			status = HttpStatus.UNPROCESSABLE_ENTITY;
 		}
 		return new ResponseEntity<String>(msg, status);		
 	}
+	
+	@PostMapping(path = "/update")
+	public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty){
+		Faculty fac = new Faculty();		
+		HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if(faculty.getFaculty_id()==0) {
+			headers.add("issue", "Employee ID is blank");
+			return ResponseEntity
+	                .status(HttpStatus.BAD_REQUEST)
+	                .headers(headers)
+	                .body(fac);				
+		}
+		if(faculty.getFirstname().isEmpty() || faculty.getEmail().isEmpty() || faculty.getTitle().isEmpty()) {
+			headers.add("issue", "Name/Email/Title is blank");
+			return ResponseEntity
+	                .status(HttpStatus.BAD_REQUEST)
+	                .headers(headers)
+	                .body(fac);						
+		}
+		System.out.println("Update Request: "+faculty);
+		HttpStatus status;
+		try {
+			Faculty newFac = facultyService.updateFacultyById(faculty.getFaculty_id(), faculty);
+			if(newFac!=null) {
+				System.out.println("Updated: "+newFac);	
+				fac = newFac;
+				status = HttpStatus.ACCEPTED;
+			}
+			else {
+				System.out.println("Not updated.");	
+				headers.add("issue", "DB Issue");
+				return ResponseEntity
+		                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                .headers(headers)
+		                .body(fac);				
+			}			
+		}
+		catch (Exception e) {
+			System.out.println("Error: "+e.getClass());
+			System.out.println("Error: "+e.getMessage());
+			headers.add("issue", "Could not update");
+			status = HttpStatus.UNPROCESSABLE_ENTITY;
+		}
+		return new ResponseEntity<Faculty>(fac, status);		
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

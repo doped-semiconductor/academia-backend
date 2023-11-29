@@ -2,9 +2,7 @@ package esd.academia.model;
 
 import java.util.Set;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
-import esd.academiaa.dto.FacultyDTO;
+//import esd.academiaa.dto.FacultyDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="faculty")
@@ -45,15 +41,6 @@ public class Faculty {
 	
 	@OneToMany(mappedBy = "facultyId")
 	private Set<Course> courses;
-
-	public Faculty(FacultyDTO fac) {
-		super();
-		this.firstname = fac.getFirstname();
-		this.lastname = fac.getLastname();
-		this.email = fac.getEmail();
-		this.photourl = fac.getPhotourl();
-		this.title = fac.getTitle();
-	}
 
 	@Override
 	public String toString() {
@@ -115,8 +102,6 @@ public class Faculty {
 
 	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
-	}
-	
-	
+	}	
 
 }
