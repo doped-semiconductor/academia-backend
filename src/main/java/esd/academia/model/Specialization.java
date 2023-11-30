@@ -40,6 +40,11 @@ public class Specialization {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Specialization(long spec_id) {
+		super();
+		this.spec_id = spec_id;
+	}
+
 	public long getSpec_id() {
 		return spec_id;
 	}

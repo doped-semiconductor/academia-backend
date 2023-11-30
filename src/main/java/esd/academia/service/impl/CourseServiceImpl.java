@@ -54,4 +54,20 @@ public class CourseServiceImpl implements CourseService {
 		return courseRepo.findById(id);
 	}
 
+	@Override
+	public boolean deleteCourse(long id) {
+		try {
+			courseRepo.deleteCoursePreReq(id);
+			courseRepo.deleteCourse(id);
+//			courseRepo.deleteById(id);
+			return true;
+		}
+		catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+
 }

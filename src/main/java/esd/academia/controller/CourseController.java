@@ -103,5 +103,26 @@ public class CourseController {
 			return new ResponseEntity<Course>(newCourse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PostMapping("/delete")
+	public ResponseEntity<String> deleteCourse(@RequestBody Course course) {
+		String msg = "Success";
+		try {
+			boolean out = this.courseService.deleteCourse(course.getCourse_id());
+			HttpStatus hs = HttpStatus.OK;
+			if (out==false) { 
+				msg = "Fail";
+				hs = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+			return new ResponseEntity<String>(msg, hs);
+		}
+		catch (Exception e) {
+			msg = "Error";
+			System.out.println(e.getLocalizedMessage());
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>(msg, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 }

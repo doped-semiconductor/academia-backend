@@ -14,5 +14,7 @@ public interface CourseService {
 	Course updateCourse(Course course);
 	
 	Optional<Course> getCourseById(long id);
+	
+	boolean deleteCourse(long id);
 
 }
