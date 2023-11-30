@@ -1,7 +1,11 @@
 package esd.academia.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 //import esd.academiaa.dto.FacultyDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +21,11 @@ public class Faculty {
 	
 	public Faculty() {
 		super();
+	}
+
+	public Faculty(long faculty_id) {
+		super();
+		this.faculty_id = faculty_id;
 	}
 
 	@Id
@@ -39,8 +48,9 @@ public class Faculty {
 	@Column(name="title", nullable=false)
 	private String title;	
 	
-	@OneToMany(mappedBy = "facultyId")
-	private Set<Course> courses;
+	@OneToMany(mappedBy = "facultyId", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Course> courses = new HashSet<Course>();
 
 	@Override
 	public String toString() {

@@ -78,7 +78,7 @@ public class StudentController {
 		String msg = "Successfully Added!";
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			Student newFac = studentService.saveStudent(student);		
+			Student newFac = studentService.saveStudent(student);
 			System.out.println("Added: "+newFac);
 		}
 		catch (Exception e) {
@@ -88,6 +88,15 @@ public class StudentController {
 			status = HttpStatus.UNPROCESSABLE_ENTITY;
 		}
 		return new ResponseEntity<String>(msg, status);		
+	}
+	
+	@PostMapping(path = "/addMultiple")
+	public ResponseEntity<String> addMultipleStudent(@RequestBody List<Student> students){
+		students.forEach(stud ->{
+			Student s = this.studentService.saveStudent(stud);
+			System.out.println(s);			
+		});
+		return new ResponseEntity<String>("Done",HttpStatus.OK);		
 	}
 	
 	@PostMapping(path = "/update")

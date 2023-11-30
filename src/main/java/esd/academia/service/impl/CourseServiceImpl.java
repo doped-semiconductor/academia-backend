@@ -1,5 +1,8 @@
 package esd.academia.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import esd.academia.model.Course;
@@ -19,6 +22,36 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public Course saveCourse(Course course) {
 		return courseRepo.save(course);
+	}
+
+	@Override
+	public List<Course> getAllCourses() {
+		List<Course> courses = null;
+		try {
+			courses = courseRepo.findAll();
+			System.out.println("Hi");
+		}
+		catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			System.out.println(e.getCause());
+			System.out.println(e.getMessage());
+		}
+		return courses;
+	}
+
+	@Override
+	public Course updateCourse(Course course) {
+		Optional<Course> retrievedCourse = courseRepo.findById(course.getCourse_id());
+		Course out = null;
+		if(retrievedCourse.isPresent()) {
+			out = courseRepo.save(course);
+		}
+		return out;
+	}
+
+	@Override
+	public Optional<Course> getCourseById(long id) {
+		return courseRepo.findById(id);
 	}
 
 }

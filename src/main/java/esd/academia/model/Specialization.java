@@ -3,6 +3,8 @@ package esd.academia.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,52 @@ public class Specialization {
 	private int credits_req;
 	
 	@OneToMany(mappedBy = "specId")
+	@JsonIgnore
 	private Set<Course> associatedCourses = new HashSet<>();
+
+	public Specialization() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public long getSpec_id() {
+		return spec_id;
+	}
+
+	public void setSpec_id(long spec_id) {
+		this.spec_id = spec_id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCredits_req() {
+		return credits_req;
+	}
+
+	public void setCredits_req(int credits_req) {
+		this.credits_req = credits_req;
+	}
+
+	public Set<Course> getAssociatedCourses() {
+		return associatedCourses;
+	}
+
+	public void setAssociatedCourses(Set<Course> associatedCourses) {
+		this.associatedCourses = associatedCourses;
+	}
 
 }

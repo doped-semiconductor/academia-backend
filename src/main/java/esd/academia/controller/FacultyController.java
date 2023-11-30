@@ -90,6 +90,15 @@ public class FacultyController {
 		return new ResponseEntity<String>(msg, status);		
 	}
 	
+	@PostMapping(path="/addMultiple")
+	public ResponseEntity<String> addMulFac(@RequestBody List<Faculty> facs){
+		facs.forEach(fac -> {			
+			Faculty newF = this.facultyService.saveFaculty(fac);
+			System.out.println(newF);
+		});
+		return new ResponseEntity<String>("Done",HttpStatus.OK);
+	}
+	
 	@PostMapping(path = "/update")
 	public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty){
 		Faculty fac = new Faculty();		

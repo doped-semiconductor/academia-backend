@@ -2,14 +2,19 @@ package esd.academia.model;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,7 +26,7 @@ public class Student {
 	@Column(name="student_id")
 	private long student_id;
 	
-	@Column(name="roll", unique = true, nullable=false)
+	@Column(name="roll")
 	private String rollnumber;
 	
 	@Column(name="fname", nullable=false)
@@ -44,6 +49,10 @@ public class Student {
 	
 	@Column(name="gradyear")
 	private int graduationYear;	
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="s_batch_code")
+	private Batch s_batch_code;
 	
 	@ManyToMany
 	@JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
@@ -129,6 +138,14 @@ public class Student {
 		this.enrolledCourses = enrolledCourses;
 	}
 
+	public Batch getS_batch_code() {
+		return s_batch_code;
+	}
+
+	public void setS_batch_code(Batch s_batch_code) {
+		this.s_batch_code = s_batch_code;
+	}
+
 	@Override
 	public String toString() {
 		return "Student [student_id=" + student_id + ", rollnumber=" + rollnumber + ", firstname=" + firstname
@@ -141,6 +158,9 @@ public class Student {
 		super();
 	}
 	
-	
+	@PostPersist
+	public void generateRollnumber() {
+		this.rollnumber = this.s_batch_code.getBatch_id() + String.format("%03d", this.student_id);
+	}	
 
 }
