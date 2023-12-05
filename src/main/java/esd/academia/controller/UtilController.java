@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import esd.academia.service.SpecializationService;
 
 @RestController
 @RequestMapping("/utils")
+@CrossOrigin("http://localhost:3000/")
 public class UtilController {
 	
 	@Autowired
@@ -74,7 +76,7 @@ public class UtilController {
 		}
 		try {
 			Specialization nb = this.specializationService.saveSpecialization(spec);
-			return new ResponseEntity<Specialization>(nb, HttpStatus.ACCEPTED);
+			return new ResponseEntity<Specialization>(nb, HttpStatus.OK);
 		}
 		catch (Exception e) {
 			HttpHeaders headers = new HttpHeaders();
